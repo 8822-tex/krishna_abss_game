@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
+
+    <title>Krishna's ABSS Map</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="krishna.css">
+</head>
+
+<body>
+
+    <!-- ================================
+         THREE.JS GAME CANVAS
+         ================================ -->
+
+    <canvas id="gameCanvas"></canvas>
+
+
+    <!-- ================================
+         LOADING SCREEN
+         ================================ -->
+
+    <section id="loadingScreen" class="screen">
+
+        <div class="loadingBox">
+
+            <div class="loadingLogo">
+                ABSS
+            </div>
+
+            <h1>ABSS MAP</h1>
+
+            <p>Krishna's ABSS Campus Game</p>
+
+            <div class="loadingBar">
+                <div id="loadingProgress"></div>
+            </div>
+
+            <div id="loadingText">
+                Loading ABSS Campus...
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================
+         ACCOUNT SCREEN
+         ================================ -->
+
+    <section id="accountScreen" class="screen hidden">
+
+        <div class="panel">
+
+            <h1>Welcome to ABSS Map</h1>
+
+            <p>Create your player account</p>
+
+            <input
+                id="nameInput"
+                type="text"
+                placeholder="Enter your name"
+                autocomplete="name"
+            >
+
+            <input
+                id="passwordInput"
+                type="password"
+                placeholder="Create password"
+                autocomplete="new-password"
+            >
+
+            <button id="createAccountButton">
+                Create Account
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================
+         CHARACTER SCREEN
+         ================================ -->
+
+    <section id="characterScreen" class="screen hidden">
+
+        <div class="panel">
+
+            <h1>Create Your Character</h1>
+
+            <p>Choose your character</p>
+
+            <div class="genderButtons">
+
+                <button
+                    id="boyButton"
+                    class="genderButton selected"
+                    type="button"
+                >
+                    Boy
+                </button>
+
+                <button
+                    id="girlButton"
+                    class="genderButton"
+                    type="button"
+                >
+                    Girl
+                </button>
+
+            </div>
+
+
+            <label
+                for="photoInput"
+                class="uploadButton"
+            >
+                Upload Face Photo
+            </label>
+
+            <input
+                id="photoInput"
+                type="file"
+                accept="image/*"
+                hidden
+            >
+
+            <img
+                id="photoPreview"
+                class="photoPreview hidden"
+                alt="Face preview"
+            >
+
+            <button
+                id="finishCharacterButton"
+                type="button"
+            >
+                Enter ABSS Map
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================
+         LOGIN SCREEN
+         ================================ -->
+
+    <section id="loginScreen" class="screen hidden">
+
+        <div class="panel">
+
+            <h1>Welcome Back</h1>
+
+            <p>Enter your password</p>
+
+            <input
+                id="loginPassword"
+                type="password"
+                placeholder="Password"
+                autocomplete="current-password"
+            >
+
+            <button
+                id="loginButton"
+                type="button"
+            >
+                Login
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================
+         GAME UI
+         ================================ -->
+
+    <main id="gameUI" class="hidden">
+
+
+        <!-- Top HUD -->
+
+        <div id="topHUD">
+
+            <div id="gameTitle">
+                ABSS MAP
+            </div>
+
+            <button
+                id="menuButton"
+                type="button"
+            >
+                ☰
+            </button>
+
+        </div>
+
+
+        <!-- Mission -->
+
+        <div id="missionHUD">
+
+            <div class="missionLabel">
+                CURRENT MISSION
+            </div>
+
+            <div id="missionText">
+                Visit Main Gate
+            </div>
+
+        </div>
+
+
+        <!-- Interaction -->
+
+        <div
+            id="interactionMessage"
+            class="hidden"
+        ></div>
+
+
+        <!-- Dialogue -->
+
+        <div
+            id="dialogueBox"
+            class="hidden"
+        >
+
+            <div id="dialogueText"></div>
+
+        </div>
+
+
+        <!-- Navigation Arrow -->
+
+        <div
+            id="navigationArrow"
+            class="hidden"
+        >
+            ↑
+        </div>
+
+
+        <!-- ============================
+             MINIMAP
+             ============================ -->
+
+        <div id="minimap">
+
+            <div class="mapLabel">
+                ABSS
+            </div>
+
+            <div
+                id="collegeMarker"
+                class="mapMarker"
+            ></div>
+
+            <div
+                id="csaMarker"
+                class="mapMarker"
+            ></div>
+
+            <div
+                id="girlsMarker"
+                class="mapMarker"
+            ></div>
+
+            <div
+                id="sportsMarker"
+                class="mapMarker"
+            ></div>
+
+            <div
+                id="gateMarker"
+                class="mapMarker"
+            ></div>
+
+            <div
+                id="playerMarker"
+                class="playerMarker"
+            ></div>
+
+        </div>
+
+
+        <!-- ============================
+             FREE LOOK AREA
+             ============================ -->
+
+        <div id="lookArea"></div>
+
+
+        <!-- ============================
+             JOYSTICK
+             ============================ -->
+
+        <div id="joystick">
+
+            <div id="joystickKnob"></div>
+
+        </div>
+
+
+        <!-- ============================
+             ACTION BUTTONS
+             ============================ -->
+
+        <div id="actionButtons">
+
+            <button
+                id="jumpButton"
+                type="button"
+            >
+                JUMP
+            </button>
+
+            <button
+                id="runButton"
+                type="button"
+            >
+                RUN
+            </button>
+
+            <button
+                id="interactButton"
+                type="button"
+            >
+                E
+            </button>
+
+        </div>
+
+
+    </main>
+
+
+    <!-- ================================
+         MENU
+         ================================ -->
+
+    <section
+        id="menuScreen"
+        class="overlay hidden"
+    >
+
+        <div class="menuPanel">
+
+            <h2>ABSS MAP</h2>
+
+            <button
+                id="resumeButton"
+                type="button"
+            >
+                Resume
+            </button>
+
+            <button
+                id="mapButton"
+                type="button"
+            >
+                Map
+            </button>
+
+            <button
+                id="missionsButton"
+                type="button"
+            >
+                Missions
+            </button>
+
+            <button
+                id="settingsButton"
+                type="button"
+            >
+                Settings
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================
+         MAP SCREEN
+         ================================ -->
+
+    <section
+        id="mapScreen"
+        class="overlay hidden"
+    >
+
+        <div class="menuPanel">
+
+            <h2>ABSS MAP</h2>
+
+            <div id="mapContainer">
+
+                <div>🏫 Main College</div>
+                <div>🚪 Main Gate</div>
+                <div>🏠 CSA Boys Hostel</div>
+                <div>🏠 Girls Hostel</div>
+                <div>🏀 Sports Ground</div>
+
+            </div>
+
+            <button
+                id="closeMapButton"
+                type="button"
+            >
+                Close
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================
+         MISSIONS SCREEN
+         ================================ -->
+
+    <section
+        id="missionsScreen"
+        class="overlay hidden"
+    >
+
+        <div class="menuPanel">
+
+            <h2>MISSIONS</h2>
+
+            <div id="missionList"></div>
+
+            <button
+                id="closeMissionsButton"
+                type="button"
+            >
+                Close
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================
+         SETTINGS SCREEN
+         ================================ -->
+
+    <section
+        id="settingsScreen"
+        class="overlay hidden"
+    >
+
+        <div class="menuPanel">
+
+            <h2>SETTINGS</h2>
+
+            <p>Graphics Quality</p>
+
+            <div class="qualityButtons">
+
+                <button
+                    id="qualityLow"
+                    type="button"
+                >
+                    Low
+                </button>
+
+                <button
+                    id="qualityMedium"
+                    type="button"
+                >
+                    Medium
+                </button>
+
+                <button
+                    id="qualityHigh"
+                    type="button"
+                >
+                    High
+                </button>
+
+            </div>
+
+            <button
+                id="closeSettingsButton"
+                type="button"
+            >
+                Close
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================
+         THREE.JS
+         MUST LOAD BEFORE KRISHNA.JS
+         ================================= -->
+
+    <script src="https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.min.js"></script>
+
+    <!-- GAME JAVASCRIPT -->
+    <script src="krishna.js"></script>
+
+</body>
+</html>
