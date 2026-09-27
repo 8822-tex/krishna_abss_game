@@ -1,172 +1,970 @@
-*{box-sizing:border-box}
+/* =========================================================
+   ABSS MAP — MAIN STYLE
+   ABSS Institute of Technology, Meerut
+========================================================= */
 
-html,body{
-  margin:0;
-  width:100%;
-  height:100%;
-  overflow:hidden;
-  background:#83b8d4;
-  font-family:Arial,sans-serif;
-  touch-action:none
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
-canvas{
-  display:block;
-  width:100%;
-  height:100%;
-  touch-action:none
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #000;
+    font-family: Arial, Helvetica, sans-serif;
+    user-select: none;
+    touch-action: none;
 }
 
-button{
-  font:700 10px Arial;
-  border:0;
-  color:#fff;
-  background:rgba(20,24,25,.68);
-  -webkit-tap-highlight-color:transparent
+/* =========================================================
+   GAME CONTAINER
+========================================================= */
+
+#gameContainer {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #87ceeb;
 }
 
-#hud{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:5
+#gameContainer canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
 }
 
-.brand{
-  position:absolute;
-  top:12px;
-  left:12px;
-  color:#fff;
-  text-shadow:0 2px 4px #000;
-  display:flex;
-  flex-direction:column;
-  gap:3px
+/* =========================================================
+   LOADING SCREEN
+========================================================= */
+
+#loadingScreen {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #243b55 0%,
+            #141e30 45%,
+            #05070a 100%
+        );
+
+    color: white;
 }
 
-.brand b{
-  font-size:15px;
-  letter-spacing:1px
+.loadingBox {
+    width: min(90%, 420px);
+    text-align: center;
+    padding: 30px 20px;
 }
 
-.brand small{
-  font-size:9px;
-  opacity:.9
+.loadingLogo {
+    width: 90px;
+    height: 90px;
+
+    margin: 0 auto 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: linear-gradient(
+        145deg,
+        #ffffff,
+        #d9d9d9
+    );
+
+    color: #b30000;
+
+    font-size: 24px;
+    font-weight: 900;
+
+    box-shadow:
+        0 0 25px rgba(255, 255, 255, 0.35);
 }
 
-#lookHint{
-  position:absolute;
-  top:13px;
-  right:12px;
-  padding:7px 10px;
-  border-radius:12px;
-  background:rgba(0,0,0,.3);
-  color:#fff;
-  font-size:9px;
-  opacity:.75
+.loadingBox h1 {
+    font-size: clamp(28px, 7vw, 44px);
+    letter-spacing: 4px;
+    margin-bottom: 8px;
 }
 
-#joystick{
-  position:fixed;
-  left:18px;
-  bottom:24px;
-  width:74px;
-  height:74px;
-  border-radius:50%;
-  background:rgba(20,30,25,.38);
-  border:1px solid rgba(255,255,255,.18);
-  z-index:10;
-  touch-action:none
+.loadingBox p {
+    color: #d5d5d5;
+    font-size: 14px;
+    margin: 4px 0;
 }
 
-#stick{
-  position:absolute;
-  left:23px;
-  top:23px;
-  width:28px;
-  height:28px;
-  border-radius:50%;
-  background:rgba(245,245,245,.9);
-  box-shadow:0 2px 6px #0006;
-  transform:translate(0,0)
+.loadingBar {
+    width: 100%;
+    height: 8px;
+
+    margin-top: 28px;
+
+    overflow: hidden;
+    border-radius: 20px;
+
+    background: rgba(255, 255, 255, 0.15);
 }
 
-.roundBtn{
-  position:fixed;
-  width:46px;
-  height:46px;
-  border-radius:50%;
-  z-index:10;
-  right:17px;
-  bottom:22px
+#loadingProgress {
+    width: 0%;
+    height: 100%;
+
+    border-radius: inherit;
+
+    background: linear-gradient(
+        90deg,
+        #ffffff,
+        #ff3333
+    );
+
+    transition: width 0.25s ease;
 }
 
-.roundBtn:active{
-  transform:scale(.94);
-  background:rgba(150,40,35,.85)
+#loadingText {
+    margin-top: 12px;
+    font-size: 13px;
+    color: #ccc;
 }
 
-#runBtn{
-  right:66px;
-  bottom:70px;
-  width:34px;
-  height:34px;
-  font-size:8px
+/* =========================================================
+   CHARACTER SCREEN
+========================================================= */
+
+#characterScreen {
+    position: fixed;
+    inset: 0;
+    z-index: 900;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            rgba(0, 0, 0, 0.6),
+            rgba(0, 0, 0, 0.78)
+        );
+
+    color: white;
 }
 
-#jumpBtn{
-  bottom:70px
+.characterBox {
+    width: min(90%, 460px);
+
+    padding: 30px 22px;
+
+    text-align: center;
+
+    border-radius: 20px;
+
+    background:
+        rgba(20, 20, 25, 0.94);
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.5);
 }
 
-#lookArea{
-  position:fixed;
-  left:40%;
-  right:0;
-  top:55px;
-  bottom:0;
-  z-index:6;
-  touch-action:none;
-  background:transparent
+.characterBox h1 {
+    font-size: clamp(22px, 6vw, 36px);
+    margin-bottom: 10px;
 }
 
-#loading{
-  position:fixed;
-  inset:0;
-  background:#111820;
-  z-index:100;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-  color:#fff;
-  gap:8px;
-  transition:opacity .35s
+.characterBox p {
+    color: #bbb;
+    margin-bottom: 25px;
 }
 
-.loader{
-  width:32px;
-  height:32px;
-  border:3px solid #ffffff30;
-  border-top-color:#fff;
-  border-radius:50%;
-  animation:spin .8s linear infinite
+.genderButtons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
 }
 
-#loading.hide{
-  opacity:0;
-  pointer-events:none
+.genderButtons button,
+#startGameButton {
+    border: none;
+    cursor: pointer;
+
+    color: white;
+
+    font-weight: 700;
+
+    border-radius: 12px;
+
+    transition:
+        transform 0.15s ease,
+        filter 0.15s ease;
 }
 
-@keyframes spin{
-  to{transform:rotate(360deg)}
+.genderButtons button {
+    width: 45%;
+    padding: 14px;
+
+    background: linear-gradient(
+        135deg,
+        #333,
+        #171717
+    );
+
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-@media(min-width:800px){
-  #joystick{
-    left:30px;
-    bottom:30px
-  }
+.genderButtons button:active,
+#startGameButton:active {
+    transform: scale(0.95);
+}
 
-  #lookHint{
-    font-size:10px
-  }
+.genderButtons button:hover,
+#startGameButton:hover {
+    filter: brightness(1.2);
+}
+
+#startGameButton {
+    width: 100%;
+
+    margin-top: 20px;
+
+    padding: 15px;
+
+    background: linear-gradient(
+        135deg,
+        #d60000,
+        #760000
+    );
+}
+
+/* =========================================================
+   COMMON HIDDEN CLASS
+========================================================= */
+
+.hidden {
+    display: none !important;
+}
+
+/* =========================================================
+   TOP UI
+========================================================= */
+
+#topUI {
+    position: fixed;
+
+    top: 16px;
+    left: 16px;
+
+    z-index: 50;
+
+    pointer-events: none;
+}
+
+#mapName {
+    font-size: 20px;
+    font-weight: 900;
+
+    letter-spacing: 2px;
+
+    color: white;
+
+    text-shadow:
+        0 2px 5px #000;
+}
+
+#campusName {
+    margin-top: 3px;
+
+    font-size: 11px;
+    letter-spacing: 1px;
+
+    color: #e5e5e5;
+
+    text-shadow:
+        0 2px 4px #000;
+}
+
+/* =========================================================
+   PLAYER UI
+========================================================= */
+
+#playerUI {
+    position: fixed;
+
+    top: 16px;
+    right: 16px;
+
+    z-index: 50;
+
+    padding: 9px 12px;
+
+    border-radius: 10px;
+
+    background: rgba(0, 0, 0, 0.42);
+
+    color: white;
+
+    pointer-events: none;
+
+    backdrop-filter: blur(5px);
+}
+
+#playerName {
+    font-weight: 800;
+    font-size: 14px;
+}
+
+#playerStatus {
+    margin-top: 3px;
+
+    font-size: 10px;
+
+    color: #ccc;
+}
+
+/* =========================================================
+   JOYSTICK
+========================================================= */
+
+#joystickArea {
+    position: fixed;
+
+    left: 22px;
+    bottom: 25px;
+
+    width: 150px;
+    height: 150px;
+
+    z-index: 100;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#joystickOuter {
+    width: 120px;
+    height: 120px;
+
+    position: relative;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255, 255, 255, 0.13),
+            rgba(255, 255, 255, 0.04)
+        );
+
+    border:
+        2px solid rgba(255, 255, 255, 0.18);
+
+    box-shadow:
+        inset 0 0 20px rgba(0, 0, 0, 0.3),
+        0 5px 20px rgba(0, 0, 0, 0.25);
+
+    backdrop-filter: blur(4px);
+}
+
+#joystickInner {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 55px;
+    height: 55px;
+
+    transform:
+        translate(-50%, -50%);
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            #ffffff,
+            #bdbdbd 45%,
+            #666 100%
+        );
+
+    border: 2px solid rgba(255, 255, 255, 0.5);
+
+    box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.45);
+}
+
+/* =========================================================
+   ACTION BUTTONS
+========================================================= */
+
+#actionButtons {
+    position: fixed;
+
+    right: 20px;
+    bottom: 25px;
+
+    z-index: 100;
+
+    display: flex;
+
+    align-items: flex-end;
+
+    gap: 12px;
+}
+
+#actionButtons button {
+    border: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+
+    font-weight: 900;
+
+    background:
+        rgba(0, 0, 0, 0.48);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.25);
+
+    box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.35);
+
+    backdrop-filter: blur(6px);
+
+    cursor: pointer;
+
+    transition:
+        transform 0.1s ease,
+        background 0.15s ease;
+}
+
+#actionButtons button:active {
+    transform: scale(0.9);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+#interactButton {
+    width: 58px;
+    height: 58px;
+
+    border-radius: 50%;
+
+    font-size: 20px;
+}
+
+#jumpButton {
+    width: 62px;
+    height: 62px;
+
+    border-radius: 50%;
+
+    font-size: 26px;
+}
+
+#runButton {
+    width: 70px;
+    height: 45px;
+
+    border-radius: 13px;
+
+    font-size: 12px;
+}
+
+/* =========================================================
+   CAMERA HINT
+========================================================= */
+
+#cameraHint {
+    position: fixed;
+
+    left: 50%;
+    bottom: 12px;
+
+    transform: translateX(-50%);
+
+    z-index: 40;
+
+    padding: 6px 12px;
+
+    border-radius: 20px;
+
+    color: rgba(255, 255, 255, 0.8);
+
+    background: rgba(0, 0, 0, 0.3);
+
+    font-size: 10px;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.5s ease;
+}
+
+/* =========================================================
+   MESSAGE BOX
+========================================================= */
+
+#messageBox {
+    position: fixed;
+
+    left: 50%;
+    bottom: 145px;
+
+    transform:
+        translateX(-50%)
+        translateY(20px);
+
+    z-index: 200;
+
+    width: min(90%, 420px);
+
+    padding: 13px 18px;
+
+    border-radius: 12px;
+
+    color: white;
+
+    background:
+        rgba(0, 0, 0, 0.75);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.15);
+
+    text-align: center;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease;
+
+    backdrop-filter: blur(8px);
+}
+
+#messageBox.show {
+    opacity: 1;
+
+    transform:
+        translateX(-50%)
+        translateY(0);
+}
+
+#messageTitle {
+    font-size: 13px;
+
+    font-weight: 900;
+
+    color: #fff;
+
+    margin-bottom: 5px;
+}
+
+#messageText {
+    font-size: 12px;
+
+    line-height: 1.5;
+
+    color: #ddd;
+}
+
+/* =========================================================
+   LOCATION PANEL
+========================================================= */
+
+#locationPanel {
+    position: fixed;
+
+    left: 16px;
+    bottom: 185px;
+
+    z-index: 50;
+
+    padding: 9px 12px;
+
+    border-radius: 9px;
+
+    background:
+        rgba(0, 0, 0, 0.42);
+
+    color: white;
+
+    pointer-events: none;
+
+    backdrop-filter: blur(5px);
+}
+
+#locationTitle {
+    font-size: 9px;
+
+    color: #aaa;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+}
+
+#locationName {
+    margin-top: 3px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+/* =========================================================
+   CROSSHAIR
+========================================================= */
+
+#crosshair {
+    position: fixed;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    z-index: 30;
+
+    color: rgba(255, 255, 255, 0.8);
+
+    font-size: 20px;
+
+    font-weight: 300;
+
+    pointer-events: none;
+
+    text-shadow:
+        0 1px 4px #000;
+}
+
+/* =========================================================
+   PAUSE BUTTON
+========================================================= */
+
+#pauseButton {
+    position: fixed;
+
+    right: 16px;
+    top: 75px;
+
+    z-index: 100;
+
+    width: 42px;
+    height: 42px;
+
+    border-radius: 50%;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.2);
+
+    background:
+        rgba(0, 0, 0, 0.45);
+
+    color: white;
+
+    font-size: 19px;
+
+    cursor: pointer;
+
+    backdrop-filter: blur(5px);
+}
+
+/* =========================================================
+   PAUSE MENU
+========================================================= */
+
+#pauseMenu {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 800;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background:
+        rgba(0, 0, 0, 0.65);
+}
+
+.pauseBox {
+    width: min(85%, 350px);
+
+    padding: 28px;
+
+    border-radius: 18px;
+
+    background:
+        rgba(25, 25, 30, 0.96);
+
+    color: white;
+
+    text-align: center;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.pauseBox h2 {
+    margin-bottom: 20px;
+
+    letter-spacing: 3px;
+}
+
+.pauseBox button {
+    display: block;
+
+    width: 100%;
+
+    padding: 13px;
+
+    margin-top: 10px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    color: white;
+
+    background:
+        #333;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.pauseBox button:hover {
+    filter: brightness(1.2);
+}
+
+/* =========================================================
+   INTERACTION PANEL
+========================================================= */
+
+#interactionPanel {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 700;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background:
+        rgba(0, 0, 0, 0.65);
+}
+
+.interactionBox {
+    position: relative;
+
+    width: min(88%, 500px);
+
+    padding: 28px;
+
+    border-radius: 18px;
+
+    background:
+        rgba(20, 20, 25, 0.97);
+
+    color: white;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.interactionBox h2 {
+    margin-bottom: 10px;
+}
+
+.interactionBox p {
+    color: #ccc;
+
+    line-height: 1.6;
+}
+
+#closeInteraction {
+    position: absolute;
+
+    right: 12px;
+    top: 10px;
+
+    width: 35px;
+    height: 35px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #333;
+
+    color: white;
+
+    font-size: 22px;
+
+    cursor: pointer;
+}
+
+/* =========================================================
+   DESKTOP CONTROLS
+========================================================= */
+
+@media (min-width: 800px) {
+
+    #joystickArea {
+        opacity: 0.75;
+    }
+
+    #cameraHint {
+        font-size: 11px;
+    }
+
+}
+
+/* =========================================================
+   SMALL MOBILE SCREENS
+========================================================= */
+
+@media (max-width: 480px) {
+
+    #topUI {
+        top: 10px;
+        left: 10px;
+    }
+
+    #mapName {
+        font-size: 16px;
+    }
+
+    #campusName {
+        font-size: 9px;
+    }
+
+    #playerUI {
+        top: 10px;
+        right: 10px;
+    }
+
+    #joystickArea {
+        left: 8px;
+        bottom: 10px;
+
+        width: 135px;
+        height: 135px;
+    }
+
+    #joystickOuter {
+        width: 105px;
+        height: 105px;
+    }
+
+    #joystickInner {
+        width: 48px;
+        height: 48px;
+    }
+
+    #actionButtons {
+        right: 10px;
+        bottom: 12px;
+
+        gap: 7px;
+    }
+
+    #interactButton {
+        width: 50px;
+        height: 50px;
+    }
+
+    #jumpButton {
+        width: 55px;
+        height: 55px;
+    }
+
+    #runButton {
+        width: 60px;
+        height: 40px;
+    }
+
+    #locationPanel {
+        left: 10px;
+        bottom: 150px;
+    }
+
+    #messageBox {
+        bottom: 125px;
+    }
+
+}
+
+/* =========================================================
+   LANDSCAPE MOBILE
+========================================================= */
+
+@media (orientation: landscape) and (max-height: 500px) {
+
+    #joystickArea {
+        bottom: 8px;
+        left: 8px;
+    }
+
+    #actionButtons {
+        bottom: 8px;
+        right: 8px;
+    }
+
+    #locationPanel {
+        bottom: 12px;
+        left: 175px;
+    }
+
+    #cameraHint {
+        bottom: 5px;
+    }
+
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
 }
