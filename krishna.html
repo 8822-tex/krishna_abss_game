@@ -1,35 +1,333 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-  <title>ABSS Map</title>
-  <link rel="stylesheet" href="krishna.css">
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0,
+                   maximum-scale=1.0, user-scalable=no">
+
+    <meta name="theme-color" content="#111827">
+
+    <title>ABSS Map - ABSSIT Campus</title>
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <div id="loading">
-    <div class="loader"></div>
-    <b>ABSS MAP</b>
-    <span>Loading campus...</span>
-  </div>
 
-  <div id="hud">
-    <div class="brand">
-      <b>ABSS MAP</b>
-      <small>ABSS Institute of Technology • Meerut</small>
+    <!-- =====================================================
+         GAME LOADING SCREEN
+    ====================================================== -->
+
+    <div id="loadingScreen">
+
+        <div class="loadingBox">
+
+            <div class="loadingLogo">
+                ABSS
+            </div>
+
+            <h1>ABSS MAP</h1>
+
+            <p>ABSS Institute of Technology</p>
+            <p>Meerut</p>
+
+            <div class="loadingBar">
+                <div id="loadingProgress"></div>
+            </div>
+
+            <div id="loadingText">
+                Loading campus...
+            </div>
+
+        </div>
+
     </div>
-    <div id="lookHint">Swipe the right side to look around</div>
-  </div>
 
-  <div id="joystick">
-    <div id="stick"></div>
-  </div>
 
-  <button id="jumpBtn" class="roundBtn">JUMP</button>
-  <button id="runBtn" class="roundBtn">RUN</button>
+    <!-- =====================================================
+         CHARACTER SELECTION
+    ====================================================== -->
 
-  <div id="lookArea"></div>
+    <div id="characterScreen" class="hidden">
 
-  <script type="module" src="krishna.js"></script>
+        <div class="characterBox">
+
+            <h1>WELCOME TO ABSS MAP</h1>
+
+            <p>Select your character</p>
+
+            <div class="genderButtons">
+
+                <button id="maleButton">
+                    MALE
+                </button>
+
+                <button id="femaleButton">
+                    FEMALE
+                </button>
+
+            </div>
+
+            <button id="startGameButton">
+                ENTER CAMPUS
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         3D GAME
+    ====================================================== -->
+
+    <main id="gameContainer">
+
+        <!-- Three.js canvas will be inserted here by JS -->
+
+    </main>
+
+
+    <!-- =====================================================
+         TOP INFORMATION UI
+    ====================================================== -->
+
+    <div id="topUI">
+
+        <div id="mapName">
+            ABSS MAP
+        </div>
+
+        <div id="campusName">
+            ABSSIT • MEERUT
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         PLAYER INFORMATION
+    ====================================================== -->
+
+    <div id="playerUI">
+
+        <div id="playerName">
+            Student
+        </div>
+
+        <div id="playerStatus">
+            ABSSIT Student
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         MOBILE JOYSTICK
+    ====================================================== -->
+
+    <div id="joystickArea">
+
+        <div id="joystickOuter">
+
+            <div id="joystickInner"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         ACTION BUTTONS
+    ====================================================== -->
+
+    <div id="actionButtons">
+
+        <button id="interactButton">
+            E
+        </button>
+
+        <button id="jumpButton">
+            ↑
+        </button>
+
+        <button id="runButton">
+            RUN
+        </button>
+
+    </div>
+
+
+    <!-- =====================================================
+         CAMERA CONTROL
+    ====================================================== -->
+
+    <div id="cameraHint">
+
+        Drag screen to look around
+
+    </div>
+
+
+    <!-- =====================================================
+         INTERACTION MESSAGE
+    ====================================================== -->
+
+    <div id="messageBox">
+
+        <div id="messageTitle">
+            ABSSIT
+        </div>
+
+        <div id="messageText">
+            Welcome to ABSS Institute of Technology.
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         LOCATION / INTERACTION PANEL
+    ====================================================== -->
+
+    <div id="locationPanel">
+
+        <div id="locationTitle">
+            Current Location
+        </div>
+
+        <div id="locationName">
+            ABSS Campus
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         CROSSHAIR
+    ====================================================== -->
+
+    <div id="crosshair">
+        +
+    </div>
+
+
+    <!-- =====================================================
+         PAUSE BUTTON
+    ====================================================== -->
+
+    <button id="pauseButton">
+        ☰
+    </button>
+
+
+    <!-- =====================================================
+         PAUSE MENU
+    ====================================================== -->
+
+    <div id="pauseMenu" class="hidden">
+
+        <div class="pauseBox">
+
+            <h2>ABSS MAP</h2>
+
+            <button id="resumeButton">
+                RESUME
+            </button>
+
+            <button id="restartButton">
+                RESTART
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         INFORMATION / INTERACTION SYSTEM
+    ====================================================== -->
+
+    <div id="interactionPanel" class="hidden">
+
+        <div class="interactionBox">
+
+            <button id="closeInteraction">
+                ×
+            </button>
+
+            <h2 id="interactionTitle">
+                ABSSIT
+            </h2>
+
+            <p id="interactionDescription">
+                Campus information
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         GAME FEATURES
+         
+         The JavaScript will create:
+         
+         • 3D campus
+         • Main college building
+         • Glass main gate
+         • Reception
+         • Teacher room
+         • Classrooms
+         • Chemistry lab
+         • Physics lab
+         • CSA Boys Hostel
+         • Girls Hostel
+         • Roads
+         • Gardens
+         • Grass
+         • Animated grass
+         • Trees
+         • Flowers
+         • Bushes
+         • Sports area
+         • Character
+         • Camera
+         • 360° looking
+         • Mobile joystick
+         • Mouse controls
+         • NPCs
+         • Animals
+         • Bicycle
+         • Doors
+         • Lights
+         • AC/fan interaction
+         • Campus interaction
+         
+    ====================================================== -->
+
+
+    <!-- =====================================================
+         THREE.JS
+    ====================================================== -->
+
+    <script type="module"
+            src="https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js">
+    </script>
+
+
+    <!-- =====================================================
+         GAME JAVASCRIPT
+    ====================================================== -->
+
+    <script type="module"
+            src="game.js">
+    </script>
+
+
 </body>
 </html>
